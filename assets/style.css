@@ -173,6 +173,8 @@ details li::marker { color: var(--accent); }
 .now li { counter-increment: now; position: relative; padding: .3rem 0 .3rem 2rem; }
 .now li::before { content: counter(now, decimal-leading-zero); position: absolute; left: 0; top: .3rem; font: .9rem/1.9 "Ubuntu Mono", monospace; color: var(--accent); }
 .aside { color: var(--muted); font-style: italic; }
+.reading { padding: .6rem 1rem; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); }
+.reading::before { content: "▤ "; color: var(--accent); }
 
 /* Contact */
 .contact-row { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }

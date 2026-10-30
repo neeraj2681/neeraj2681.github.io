@@ -476,6 +476,26 @@
     requestAnimationFrame(frame);
   }
 
+  // Currently reading, from assets/now.json
+  var reading = null;
+  fetch('assets/now.json')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) {
+      var r = data && data.reading;
+      if (!r || !r.title) return;
+      reading = r;
+      var title = '<strong>' + escapeHtml(r.title) + '</strong>';
+      if (r.url && /^https?:\/\//.test(r.url)) title = link(escapeHtml(r.url), title);
+      var el = $('#reading');
+      el.innerHTML = 'Currently reading ' + title + (r.author ? ' by ' + escapeHtml(r.author) : '');
+      el.hidden = false;
+    })
+    .catch(function () {});
+  secrets.reading = function () {
+    if (reading) print('currently reading: ' + escapeHtml(reading.title) + (reading.author ? ' by ' + escapeHtml(reading.author) : ''));
+    else print('between books. recommendations welcome: `contact`');
+  };
+
   // Greeting that depends on the visitor's local time
   var hour = new Date().getHours();
   $('#greeting').textContent =

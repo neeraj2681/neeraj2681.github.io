@@ -328,6 +328,32 @@
     }
   });
 
+  // `git log`: this site's real commits, fetched live from GitHub
+  function timeAgo(iso) {
+    var s = (Date.now() - new Date(iso).getTime()) / 1000;
+    var units = [['year', 31536000], ['month', 2592000], ['day', 86400], ['hour', 3600], ['minute', 60]];
+    for (var i = 0; i < units.length; i++) {
+      var n = Math.floor(s / units[i][1]);
+      if (n >= 1) return n + ' ' + units[i][0] + (n > 1 ? 's' : '') + ' ago';
+    }
+    return 'just now';
+  }
+  secrets.git = function (args) {
+    if (args[0] !== 'log') { print('usage: git log   (the only git you get here)'); return; }
+    var loading = print('fetching commits…', 'dim');
+    fetch('https://api.github.com/repos/neeraj2681/neeraj2681.github.io/commits?per_page=20')
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (list) {
+        loading.remove();
+        list.filter(function (c) { return c.parents.length < 2; }).slice(0, 8).forEach(function (c) {
+          print('<span class="sha">' + link(c.html_url, c.sha.slice(0, 7)) + '</span> ' +
+            escapeHtml(c.commit.message.split('\n')[0]) +
+            ' <span class="dim">(' + timeAgo(c.commit.author.date) + ')</span>');
+        });
+      })
+      .catch(function () { loading.textContent = 'git: GitHub is rate-limiting us. try again in a bit.'; });
+  };
+
   // Greeting that depends on the visitor's local time
   var hour = new Date().getHours();
   $('#greeting').textContent =

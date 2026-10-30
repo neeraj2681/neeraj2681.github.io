@@ -274,3 +274,51 @@ dialog#terminal::backdrop { background: rgba(31, 26, 20, .45); backdrop-filter: 
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* Print: the page becomes a plain resume */
+@media print {
+  @page { margin: 14mm 16mm; }
+  /* :is() keeps specificity high enough to beat the dark-theme rules */
+  :root:is([data-theme], :not([data-theme])) {
+    --bg: #fff; --surface: #fff; --line: #bbb; --text: #111; --muted: #444; --accent: #111; --accent-soft: #eee;
+    filter: none; color-scheme: light; background: #fff;
+  }
+  .num, .links li:has(a[href$=".pdf"]) { display: none; }
+  h2, .sub { break-after: avoid; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  body { font-size: 10pt; line-height: 1.45; background: #fff; }
+  .site-header, .skip, .tools, .filters, .more, #now, .site-footer, dialog, .float-toast, .rain,
+  blockquote, .pill-msg, .contact-row .btn, .toast, .reading { display: none !important; }
+  .wrap { max-width: none; padding: 0; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .hero { padding: 0 0 6pt; gap: 14pt; }
+  .avatar { width: 64px; height: 64px; box-shadow: none; filter: grayscale(1); }
+  .kicker { display: none; }
+  h1 { font-size: 22pt; margin-bottom: 2pt; }
+  .lede { font-size: 10.5pt; margin-bottom: 4pt; }
+  .links { font-size: 9pt; gap: 2pt 12pt; }
+  .links a[href^="http"]::after { content: " · " attr(href); color: var(--muted); }
+  .links a[href^="mailto"]::after { content: " · neeraj2681@gmail.com"; color: var(--muted); }
+  a { color: var(--text); text-decoration: none; }
+  .section { padding: 8pt 0; }
+  h2 { font-size: 12.5pt; margin-bottom: 6pt; }
+  .sub { font-size: 11pt; margin: 8pt 0 4pt; }
+  p { margin-bottom: 4pt; }
+  details { padding-bottom: 6pt; }
+  details::details-content { content-visibility: visible; }
+  .role::after { content: none !important; }
+  details ul { margin: 2pt 0; }
+  details li { margin-bottom: 1pt; }
+  .timeline > li, .projects li, .edu li { break-inside: avoid; }
+  .tags span { padding: 0 4pt; border: 1px solid var(--line); background: none; }
+  .projects { grid-template-columns: 1fr 1fr; gap: 4pt 16pt; }
+  .projects li { animation: none; }
+  .projects li[hidden] { display: block; }
+  .projects a { padding: 0; border: none; background: none; box-shadow: none; transform: none; }
+  .projects h3 { font-size: 10pt; margin-bottom: 0; }
+  .projects h3::after { content: none; }
+  .projects p { font-size: 9pt; margin-bottom: 0; }
+  .projects .tags { display: none; }
+  .skills { grid-template-columns: 5rem 1fr; gap: 1pt 8pt; }
+  #contact p { margin-bottom: 2pt; }
+}

@@ -1,12 +1,12 @@
 /* Sepia palette: light by default, dark sepia via system setting or toggle. */
 :root {
-  --bg: #f4ecd8;
-  --surface: #ede2c8;
-  --line: #dccdab;
-  --text: #3b2f22;
-  --muted: #6f5d48;
-  --accent: #9c4a1a;
-  --accent-soft: #e7d3b3;
+  --bg: #f3e3b8;
+  --surface: #ecd8a6;
+  --line: #d8c08a;
+  --text: #3a2c1a;
+  --muted: #67532f;
+  --accent: #944214;
+  --accent-soft: #e3cb92;
   --term-bg: #2b211a;
   --term-text: #eadfca;
   --term-accent: #e8955a;

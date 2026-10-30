@@ -364,6 +364,7 @@
   var toastEl = $('#toast');
   var toastTimer;
   function toast(html, ms) {
+    if (!toastEl) return;
     toastEl.innerHTML = html;
     toastEl.hidden = false;
     clearTimeout(toastTimer);
@@ -397,34 +398,38 @@
   var matrixBtn = $('#matrix');
   var pills = $('#pills');
   var pillMsg = $('#pill-msg');
-  function showPills(show) {
-    pills.hidden = !show;
-    matrixBtn.setAttribute('aria-expanded', String(show));
-  }
-  matrixBtn.addEventListener('click', function (e) {
-    e.stopPropagation();
-    showPills(pills.hidden);
-    if (!pills.hidden) $('.pill', pills).focus();
-  });
-  $$('.pill').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
+  // Guard each page-dependent feature: a stale cached page may lack its elements,
+  // and one missing element must not stop the rest of the script.
+  if (matrixBtn && pills && pillMsg) {
+    var showPills = function (show) {
+      pills.hidden = !show;
+      matrixBtn.setAttribute('aria-expanded', String(show));
+    };
+    matrixBtn.addEventListener('click', function (e) {
       e.stopPropagation();
-      showPills(false);
-      if (btn.dataset.pill === 'blue') {
-        pillMsg.textContent = 'Blue it is. Nothing happened. Carry on scrolling.';
-      } else {
-        pillMsg.textContent = '';
-        redPill();
+      showPills(pills.hidden);
+      if (!pills.hidden) $('.pill', pills).focus();
+    });
+    $$('.pill').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        showPills(false);
+        if (btn.dataset.pill === 'blue') {
+          pillMsg.textContent = 'Blue it is. Nothing happened. Carry on scrolling.';
+        } else {
+          pillMsg.textContent = '';
+          redPill();
+        }
+      });
+    });
+    document.addEventListener('click', function () { if (!pills.hidden) showPills(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !pills.hidden) {
+        showPills(false);
+        matrixBtn.focus();
       }
     });
-  });
-  document.addEventListener('click', function () { if (!pills.hidden) showPills(false); });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !pills.hidden) {
-      showPills(false);
-      matrixBtn.focus();
-    }
-  });
+  }
 
   function redPill() {
     if (term.open) term.close();
@@ -483,15 +488,16 @@
 
   // Currently reading, from assets/now.json
   var reading = null;
-  fetch('assets/now.json')
+  fetch('assets/now.json', { cache: 'no-cache' })
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (data) {
       var r = data && data.reading;
       if (!r || !r.title) return;
       reading = r;
+      var el = $('#reading');
+      if (!el) return;
       var title = '<strong>' + escapeHtml(r.title) + '</strong>';
       if (r.url && /^https?:\/\//.test(r.url)) title = link(escapeHtml(r.url), title);
-      var el = $('#reading');
       el.innerHTML = 'Currently reading ' + title + (r.author ? ' by ' + escapeHtml(r.author) : '');
       el.hidden = false;
     })
@@ -513,20 +519,26 @@
 
   // `?` overlay listing shortcuts and hinting at the secrets
   var help = $('#help');
-  function openHelp() { if (!help.open) help.showModal(); }
-  $('#help-open').addEventListener('click', openHelp);
-  help.addEventListener('click', function (e) { if (e.target === help) help.close(); });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === '?' && !isTyping(e) && !document.querySelector('dialog[open]')) {
-      e.preventDefault();
-      openHelp();
-    }
-  });
+  var helpOpen = $('#help-open');
+  if (help && helpOpen) {
+    var openHelp = function () { if (!help.open) help.showModal(); };
+    helpOpen.addEventListener('click', openHelp);
+    help.addEventListener('click', function (e) { if (e.target === help) help.close(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === '?' && !isTyping(e) && !document.querySelector('dialog[open]')) {
+        e.preventDefault();
+        openHelp();
+      }
+    });
+  }
 
   // Greeting that depends on the visitor's local time
+  var greeting = $('#greeting');
   var hour = new Date().getHours();
-  $('#greeting').textContent =
-    hour < 5 ? 'Up at ' + (hour || 12) + ' AM? College me approves. I’m' :
-    hour < 12 ? 'Good morning, I’m' :
-    hour < 17 ? 'Good afternoon, I’m' : 'Good evening, I’m';
+  if (greeting) {
+    greeting.textContent =
+      hour < 5 ? 'Up at ' + (hour || 12) + ' AM? College me approves. I’m' :
+      hour < 12 ? 'Good morning, I’m' :
+      hour < 17 ? 'Good afternoon, I’m' : 'Good evening, I’m';
+  }
 })();

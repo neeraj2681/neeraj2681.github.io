@@ -209,6 +209,7 @@ dialog#terminal::backdrop { background: rgba(31, 26, 20, .45); backdrop-filter: 
 #term-out p { margin: 0; white-space: pre-wrap; word-break: break-word; }
 #term-out .cmd { color: var(--term-text); }
 #term-out .dim { color: #9c8e78; }
+#term-out .red { color: #e5735c; }
 #term-out a { color: var(--term-accent); }
 .term-line { display: flex; gap: .5rem; }
 .prompt { color: var(--term-green); font-weight: 700; }

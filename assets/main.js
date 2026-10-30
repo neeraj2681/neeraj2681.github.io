@@ -102,6 +102,8 @@
     if (cls) p.className = cls;
     p.innerHTML = html;
     out.appendChild(p);
+    body.scrollTop = body.scrollHeight;
+    return p;
   }
   function link(href, text) {
     return '<a href="' + href + '" target="_blank" rel="noopener">' + text + '</a>';
@@ -195,19 +197,81 @@
   };
   var aliases = { ls: 'projects', cv: 'resume', quit: 'exit', '?': 'help' };
 
+  var quotes = [
+    ['You have power over your mind — not outside events. Realize this, and you will find strength.', 'Marcus Aurelius'],
+    ['Waste no more time arguing about what a good man should be. Be one.', 'Marcus Aurelius'],
+    ['The happiness of your life depends upon the quality of your thoughts.', 'Marcus Aurelius'],
+    ['We suffer more often in imagination than in reality.', 'Seneca'],
+    ['He who fears death will never do anything worthy of a man who is alive.', 'Seneca'],
+    ["It's not what happens to you, but how you react to it that matters.", 'Epictetus'],
+    ['No man is free who is not master of himself.', 'Epictetus'],
+    ['First say to yourself what you would be; and then do what you have to do.', 'Epictetus']
+  ];
+
+  // Hidden commands: not listed by `help`. Later features register more here.
+  var secrets = {
+    fortune: function () {
+      var q = quotes[Math.floor(Math.random() * quotes.length)];
+      print('“' + escapeHtml(q[0]) + '”');
+      print('    — ' + q[1], 'dim');
+    },
+    sudo: function (args) {
+      if (args[0] === 'hire') {
+        print('[sudo] password for recruiter: ********');
+        print('Permission granted. Opening email…');
+        setTimeout(function () {
+          location.href = 'mailto:neeraj2681@gmail.com?subject=' + encodeURIComponent("Let's work together");
+        }, 900);
+      } else {
+        print('nice try. this incident will be reported to the Stoics.');
+      }
+    },
+    portfolio: function () {
+      var line = print('', 'red');
+      var value = 100;
+      var ticks = 0;
+      var timer = setInterval(function () {
+        value -= 1 + Math.random() * 4;
+        line.textContent = 'NK-PORTFOLIO  ' + value.toFixed(2) + '  ▼ ' + (value - 100).toFixed(2) + '%';
+        if (++ticks === 6) {
+          clearInterval(timer);
+          print("(it's all red now. stay stoic: `fortune`)", 'dim');
+        }
+      }, 280);
+    },
+    run: function () {
+      var track = 28;
+      var you = 0;
+      var cheetah = 0;
+      var line = print('');
+      var timer = setInterval(function () {
+        you = Math.min(track, you + 2 + Math.round(Math.random()));
+        cheetah = Math.min(track - 3, cheetah + Math.round(Math.random() * 2));
+        line.textContent =
+          'you      |' + '-'.repeat(you) + 'o/' + ' '.repeat(track - you) + '|\n' +
+          'cheetah  |' + '-'.repeat(cheetah) + '=^.^=' + ' '.repeat(track - 3 - cheetah) + '|';
+        if (you === track) {
+          clearInterval(timer);
+          print('You win. (The cheetah was napping. Still counts.)');
+        }
+      }, 120);
+    },
+    sleep: function () {
+      print("It's 4 AM somewhere. College me says stay up; present me says go to bed.");
+      print('Present me wins. Mostly.', 'dim');
+    }
+  };
+
   function runCommand(line) {
     print('<span class="prompt">niraj@portfolio</span>:<span class="path">~</span>$ ' + escapeHtml(line), 'cmd');
     var parts = line.trim().split(/\s+/);
     var name = (parts[0] || '').toLowerCase();
     if (!name) return;
     name = aliases[name] || name;
-    if (commands[name]) {
-      commands[name].run(parts.slice(1).map(function (a) { return a.toLowerCase(); }));
-    } else if (name === 'sudo') {
-      print('nice try. this incident will be reported to the Stoics.');
-    } else {
-      print(escapeHtml(name) + ': command not found. type `help`');
-    }
+    var args = parts.slice(1).map(function (a) { return a.toLowerCase(); });
+    if (commands[name]) commands[name].run(args);
+    else if (secrets[name]) secrets[name](args);
+    else print(escapeHtml(name) + ': command not found. type `help`');
   }
 
   function openTerminal() {
@@ -234,7 +298,6 @@
     if (line.trim()) history.push(line);
     historyPos = history.length;
     runCommand(line);
-    body.scrollTop = body.scrollHeight;
   });
 
   input.addEventListener('keydown', function (e) {

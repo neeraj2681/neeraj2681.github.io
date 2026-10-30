@@ -388,6 +388,94 @@
     print('stoic mode: ' + (toggleStoic() ? 'on' : 'off'));
   };
 
+  // Red pill / blue pill on "the Matrix" in the About quote
+  var matrixBtn = $('#matrix');
+  var pills = $('#pills');
+  var pillMsg = $('#pill-msg');
+  function showPills(show) {
+    pills.hidden = !show;
+    matrixBtn.setAttribute('aria-expanded', String(show));
+  }
+  matrixBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    showPills(pills.hidden);
+    if (!pills.hidden) $('.pill', pills).focus();
+  });
+  $$('.pill').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      showPills(false);
+      if (btn.dataset.pill === 'blue') {
+        pillMsg.textContent = 'Blue it is. Nothing happened. Carry on scrolling.';
+      } else {
+        pillMsg.textContent = '';
+        redPill();
+      }
+    });
+  });
+  document.addEventListener('click', function () { if (!pills.hidden) showPills(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !pills.hidden) {
+      showPills(false);
+      matrixBtn.focus();
+    }
+  });
+
+  function redPill() {
+    if (term.open) term.close();
+    var wake = function () {
+      openTerminal();
+      print('Wake up, visitor…', 'red');
+      print('You were in the Matrix all along. Type `help`, or `fortune` for some Stoic perspective.', 'dim');
+    };
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) wake();
+    else codeRain(wake);
+  }
+  secrets.matrix = redPill;
+
+  function codeRain(done) {
+    var canvas = document.createElement('canvas');
+    canvas.className = 'rain';
+    canvas.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    var dpr = window.devicePixelRatio || 1;
+    var w = canvas.width = window.innerWidth * dpr;
+    var h = canvas.height = window.innerHeight * dpr;
+    var size = 16 * dpr;
+    var chars = '01₹$€¥#ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎ';
+    var drops = [];
+    for (var i = 0; i < Math.ceil(w / size); i++) drops.push(-Math.floor(Math.random() * 30));
+    var styles = getComputedStyle(root);
+    var bg = styles.getPropertyValue('--bg').trim();
+    var fg = styles.getPropertyValue('--accent').trim();
+    ctx.font = size + 'px "Ubuntu Mono", monospace';
+    var start = performance.now();
+    var last = 0;
+    function frame(t) {
+      if (t - last > 50) {
+        last = t;
+        ctx.globalAlpha = 0.14;
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, w, h);
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = fg;
+        for (var i = 0; i < drops.length; i++) {
+          ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * size, drops[i] * size);
+          if (drops[i] * size > h && Math.random() > 0.96) drops[i] = 0;
+          drops[i]++;
+        }
+      }
+      if (t - start < 3200) {
+        requestAnimationFrame(frame);
+      } else {
+        canvas.classList.add('fade');
+        setTimeout(function () { canvas.remove(); done(); }, 600);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
   // Greeting that depends on the visitor's local time
   var hour = new Date().getHours();
   $('#greeting').textContent =

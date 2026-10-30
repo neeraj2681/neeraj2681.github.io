@@ -264,4 +264,11 @@
       openTerminal();
     }
   });
+
+  // Greeting that depends on the visitor's local time
+  var hour = new Date().getHours();
+  $('#greeting').textContent =
+    hour < 5 ? 'Up at ' + (hour || 12) + ' AM? College me approves. I’m' :
+    hour < 12 ? 'Good morning, I’m' :
+    hour < 17 ? 'Good afternoon, I’m' : 'Good evening, I’m';
 })();

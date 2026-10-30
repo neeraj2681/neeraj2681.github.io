@@ -354,6 +354,40 @@
       .catch(function () { loading.textContent = 'git: GitHub is rate-limiting us. try again in a bit.'; });
   };
 
+  // Floating toast
+  var toastEl = $('#toast');
+  var toastTimer;
+  function toast(html, ms) {
+    toastEl.innerHTML = html;
+    toastEl.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.hidden = true; }, ms || 4000);
+  }
+
+  // Stoic mode: Konami code (↑↑↓↓←→←→BA) or `stoic` in the terminal
+  function toggleStoic() {
+    var on = root.toggleAttribute('data-stoic');
+    toast(on
+      ? '“You have power over your mind — not outside events.”<small>Marcus Aurelius · stoic mode on</small>'
+      : 'Stoic mode off.<small>colour is an indifferent anyway</small>');
+    return on;
+  }
+  var konami = 'arrowup arrowup arrowdown arrowdown arrowleft arrowright arrowleft arrowright b a';
+  var recentKeys = [];
+  document.addEventListener('keydown', function (e) {
+    var tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || !e.key) return;
+    recentKeys.push(e.key.toLowerCase());
+    if (recentKeys.length > 10) recentKeys.shift();
+    if (recentKeys.join(' ') === konami) {
+      recentKeys = [];
+      toggleStoic();
+    }
+  });
+  secrets.stoic = function () {
+    print('stoic mode: ' + (toggleStoic() ? 'on' : 'off'));
+  };
+
   // Greeting that depends on the visitor's local time
   var hour = new Date().getHours();
   $('#greeting').textContent =

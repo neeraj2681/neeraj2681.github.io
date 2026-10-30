@@ -11,7 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css">
+  <!-- Bump ?v= here and on main.js below whenever style.css or main.js changes, so browsers never mix old and new files. -->
+  <link rel="stylesheet" href="assets/style.css?v=2026-10-30.2">
   <script>
     // Apply saved theme before paint to avoid a flash.
     try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
@@ -291,6 +292,6 @@
 
   <div class="float-toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="assets/main.js"></script>
+  <script src="assets/main.js?v=2026-10-30.2"></script>
 </body>
 </html>

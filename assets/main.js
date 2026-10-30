@@ -496,6 +496,16 @@
     else print('between books. recommendations welcome: `contact`');
   };
 
+  // Print as a resume: expand every role first, restore afterwards
+  var closedForPrint = [];
+  window.addEventListener('beforeprint', function () {
+    closedForPrint = $$('details:not([open])');
+    closedForPrint.forEach(function (d) { d.open = true; });
+  });
+  window.addEventListener('afterprint', function () {
+    closedForPrint.forEach(function (d) { d.open = false; });
+  });
+
   // Greeting that depends on the visitor's local time
   var hour = new Date().getHours();
   $('#greeting').textContent =

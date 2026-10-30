@@ -215,6 +215,25 @@ blockquote { position: relative; }
 .rain { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 30; pointer-events: none; transition: opacity .6s ease; }
 .rain.fade { opacity: 0; }
 
+/* Secrets & shortcuts overlay */
+.kbd-btn { font: inherit; color: inherit; background: none; border: none; padding: 0; cursor: pointer; }
+.kbd-btn:hover { color: var(--text); }
+dialog.help {
+  width: min(32rem, calc(100vw - 2rem)); padding: 1.5rem 1.75rem; border: 1px solid var(--line); border-radius: 14px;
+  background: var(--bg); color: var(--text); box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
+}
+dialog.help::backdrop { background: rgba(31, 26, 20, .45); backdrop-filter: blur(2px); }
+.help h2 { margin-bottom: 1rem; }
+.help dl { display: grid; grid-template-columns: auto 1fr; gap: .6rem 1.25rem; margin: 0 0 1.25rem; align-items: baseline; }
+.help dt { display: flex; flex-wrap: wrap; gap: 2px; font: .95rem "Ubuntu Mono", monospace; color: var(--accent); max-width: 9.5rem; }
+.help dd { margin: 0; }
+.help code { font: .95rem "Ubuntu Mono", monospace; padding: 0 .3rem; border-radius: 4px; background: var(--surface); }
+.help form { text-align: right; }
+@media (max-width: 640px) {
+  .help dl { grid-template-columns: 1fr; gap: .1rem; }
+  .help dd { margin-bottom: .6rem; }
+}
+
 /* Floating toast */
 .float-toast {
   position: fixed; left: 50%; bottom: 1.5rem; transform: translateX(-50%); z-index: 20;

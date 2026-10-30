@@ -258,7 +258,7 @@
   </main>
 
   <footer class="wrap site-footer">
-    <p>© <span id="year">2026</span> Niraj Kumar · Press <kbd>`</kbd> for a terminal</p>
+    <p>© <span id="year">2026</span> Niraj Kumar · Press <kbd>`</kbd> for a terminal · <button type="button" class="kbd-btn" id="help-open" aria-haspopup="dialog"><kbd>?</kbd> for secrets</button></p>
   </footer>
 
   <dialog id="terminal" aria-label="Terminal">
@@ -274,6 +274,19 @@
         <input id="term-input" type="text" spellcheck="false" autocapitalize="off" aria-label="Terminal command">
       </form>
     </div>
+  </dialog>
+
+  <dialog id="help" class="help" aria-labelledby="help-title">
+    <h2 id="help-title">Secrets &amp; shortcuts</h2>
+    <dl>
+      <dt><kbd>`</kbd></dt><dd>open the terminal</dd>
+      <dt><kbd>?</kbd></dt><dd>this list</dd>
+      <dt><kbd>↑</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd><kbd>←</kbd><kbd>→</kbd><kbd>B</kbd><kbd>A</kbd></dt><dd>stoic mode</dd>
+      <dt>“the Matrix”</dt><dd>in the About section. Choose wisely.</dd>
+      <dt><kbd>Ctrl</kbd>/<kbd>⌘</kbd> <kbd>P</kbd></dt><dd>print this page as a resume</dd>
+      <dt>terminal</dt><dd><code>help</code> lists the basics. A Stoic, an investor, a runner and an insomniac would each find one more; so would a recruiter with <code>sudo</code>. Curious how this site was built? <code>git log</code>.</dd>
+    </dl>
+    <form method="dialog"><button class="btn" autofocus>Got it</button></form>
   </dialog>
 
   <div class="float-toast" id="toast" role="status" aria-live="polite" hidden></div>

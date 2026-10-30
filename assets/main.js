@@ -320,9 +320,15 @@
     }
   });
 
-  document.addEventListener('keydown', function (e) {
+  // True when the visitor is typing in a visible field. Focus can linger on the
+  // input of a closed dialog, and that must not swallow keyboard shortcuts.
+  function isTyping(e) {
     var tag = (e.target.tagName || '').toLowerCase();
-    if (e.key === '`' && !term.open && tag !== 'input' && tag !== 'textarea') {
+    return (tag === 'input' || tag === 'textarea') && !e.target.closest('dialog:not([open])');
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '`' && !document.querySelector('dialog[open]') && !isTyping(e)) {
       e.preventDefault();
       openTerminal();
     }
@@ -375,8 +381,7 @@
   var konami = 'arrowup arrowup arrowdown arrowdown arrowleft arrowright arrowleft arrowright b a';
   var recentKeys = [];
   document.addEventListener('keydown', function (e) {
-    var tag = (e.target.tagName || '').toLowerCase();
-    if (tag === 'input' || tag === 'textarea' || !e.key) return;
+    if (isTyping(e) || !e.key) return;
     recentKeys.push(e.key.toLowerCase());
     if (recentKeys.length > 10) recentKeys.shift();
     if (recentKeys.join(' ') === konami) {
@@ -504,6 +509,18 @@
   });
   window.addEventListener('afterprint', function () {
     closedForPrint.forEach(function (d) { d.open = false; });
+  });
+
+  // `?` overlay listing shortcuts and hinting at the secrets
+  var help = $('#help');
+  function openHelp() { if (!help.open) help.showModal(); }
+  $('#help-open').addEventListener('click', openHelp);
+  help.addEventListener('click', function (e) { if (e.target === help) help.close(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '?' && !isTyping(e) && !document.querySelector('dialog[open]')) {
+      e.preventDefault();
+      openHelp();
+    }
   });
 
   // Greeting that depends on the visitor's local time

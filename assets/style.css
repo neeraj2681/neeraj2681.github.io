@@ -1,12 +1,12 @@
 /* Sepia palette: light by default, dark sepia via system setting or toggle. */
 :root {
-  --bg: #f3e3b8;
-  --surface: #ecd8a6;
-  --line: #d8c08a;
-  --text: #3a2c1a;
-  --muted: #67532f;
-  --accent: #944214;
-  --accent-soft: #e3cb92;
+  --bg: #f4ecd8;
+  --surface: #ede2c8;
+  --line: #dccdab;
+  --text: #3b2f22;
+  --muted: #6f5d48;
+  --accent: #9c4a1a;
+  --accent-soft: #e7d3b3;
   --term-bg: #2b211a;
   --term-text: #eadfca;
   --term-accent: #e8955a;
@@ -136,6 +136,10 @@ details li::marker { color: var(--accent); }
 .tags span { font: .82rem "Ubuntu Mono", monospace; padding: .05rem .5rem; border-radius: 999px; background: var(--accent-soft); color: var(--text); }
 .edu { list-style: none; margin: 0; padding: 0; }
 .edu li { display: flex; justify-content: space-between; gap: 1rem; padding: .35rem 0; }
+.edu small { font-size: .9rem; }
+.skills { display: grid; grid-template-columns: 6rem 1fr; gap: .4rem 1rem; margin: 0; }
+.skills dt { font: .95rem/1.8 "Ubuntu Mono", monospace; color: var(--accent); }
+.skills dd { margin: 0; }
 
 /* Projects */
 .filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.25rem; }
@@ -220,6 +224,8 @@ dialog#terminal::backdrop { background: rgba(31, 26, 20, .45); backdrop-filter: 
   summary { grid-template-columns: 1fr; }
   .when { grid-column: 1; grid-row: auto; }
   .edu li { flex-direction: column; gap: 0; }
+  .skills { grid-template-columns: 1fr; gap: 0; }
+  .skills dd { margin-bottom: .6rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

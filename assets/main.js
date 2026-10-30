@@ -123,7 +123,7 @@
     },
     whoami: {
       desc: 'who is this',
-      run: function () { print('Niraj Kumar — Senior Data Scientist @ Accertify. Fraud, ML, books, Stoicism.'); }
+      run: function () { print('Niraj Kumar — Data Scientist II @ VinFast (GSM). Dispatch, fraud, ML, GenAI, books, Stoicism.'); }
     },
     about: {
       desc: 'jump to about',
@@ -132,7 +132,8 @@
     work: {
       desc: 'work history',
       run: function () {
-        print('2024–now   Senior Data Scientist   Accertify');
+        print('2026–now   Data Scientist II       VinFast (GSM)');
+        print('2024–2026  Senior Data Scientist   Accertify');
         print('2022–2024  Data Scientist          American Express');
         print('2020–2022  M.Tech CS               Indian Statistical Institute');
         print('<span class="dim">type `open work` to jump to details</span>');
@@ -166,7 +167,7 @@
     },
     resume: {
       desc: 'open resume (pdf)',
-      run: function () { window.open('cv/niraj_kumar__resume.pdf', '_blank', 'noopener'); print('opening resume…'); }
+      run: function () { window.open('cv/niraj_kumar_resume.pdf', '_blank', 'noopener'); print('opening resume…'); }
     },
     open: {
       desc: 'jump to a section',

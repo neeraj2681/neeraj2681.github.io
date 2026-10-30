@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Niraj Kumar</title>
-  <meta name="description" content="Niraj Kumar — Senior Data Scientist working on machine learning for fraud detection. Projects, experience and notes.">
-  <meta name="theme-color" content="#f3e3b8" media="(prefers-color-scheme: light)">
+  <meta name="description" content="Niraj Kumar — Data Scientist building ML and GenAI systems for ride-hailing dispatch and fraud detection. Projects, experience and notes.">
+  <meta name="theme-color" content="#f4ecd8" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1f1a14" media="(prefers-color-scheme: dark)">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f3e3b8'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='15' font-weight='700' text-anchor='middle' fill='%239c4a1a'%3Enk%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f4ecd8'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='15' font-weight='700' text-anchor='middle' fill='%239c4a1a'%3Enk%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -48,11 +48,11 @@
       <div>
         <p class="kicker">Hello, I'm</p>
         <h1>Niraj Kumar</h1>
-        <p class="lede">Senior Data Scientist at <strong>Accertify</strong>, building machine learning that catches fraud before it costs anyone money.</p>
+        <p class="lede">Data Scientist at <strong>VinFast (GSM)</strong>, building real-time dispatch for ride-hailing, after four years of ML and GenAI for fraud detection.</p>
         <ul class="links">
           <li><a href="https://github.com/neeraj2681" rel="me">GitHub</a></li>
           <li><a href="https://www.linkedin.com/in/neerajbhatt2/" rel="me">LinkedIn</a></li>
-          <li><a href="cv/niraj_kumar__resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+          <li><a href="cv/niraj_kumar_resume.pdf" target="_blank" rel="noopener">Resume</a></li>
           <li><a href="mailto:neeraj2681@gmail.com">Email</a></li>
         </ul>
       </div>
@@ -60,7 +60,7 @@
 
     <section id="about" class="section">
       <h2><span class="num">01</span> About</h2>
-      <p>I started off as a software engineer, then found my interests lined up far better with machine learning. These days I use data science to cut down transaction fraud across industries: money transfer, retail, ticketing and travel.</p>
+      <p>I started off as a software engineer, then found my interests lined up far better with machine learning. I own the whole lifecycle, from framing the problem and designing experiments to building models, fine-tuning LLMs and shipping them. I spent four years fighting transaction fraud at American Express and Accertify; now I work on matching riders and drivers in real time.</p>
       <p>Outside work I read about financial freedom, human history (especially the <em>Out of Africa</em> theory), mathematics, cultures across the globe and Stoicism. Quantum computing fascinates me for how much it might change in the near future.</p>
       <blockquote>Purpose for now: to get out of the Matrix.</blockquote>
     </section>
@@ -71,41 +71,65 @@
         <li>
           <details open>
             <summary>
-              <span class="role">Senior Data Scientist</span>
-              <span class="org">Accertify <small>(split from American Express, 2024)</small></span>
-              <span class="when">May 2024 – now</span>
+              <span class="role">Data Scientist II</span>
+              <span class="org">VinFast <small>(GSM – Green SM)</small></span>
+              <span class="when">Aug 2026 – now</span>
             </summary>
             <ul>
-              <li>Built a new ML-based <strong>Auto-Review</strong> product, saving roughly <strong>$1M per client per year</strong> and sharply reducing operational cost.</li>
-              <li>Designed feature engineering such as linkage analysis, past-lookup and out-of-pattern detection that improved existing models.</li>
-              <li>Ran A/B and stress tests to validate model impact and harden deployments.</li>
-              <li>Mentor junior data scientists and oversee project delivery.</li>
+              <li>Building a <strong>dynamic dispatch system</strong> that tunes matching parameters (search radius, pickup distance, batching window) in real time from local supply and demand.</li>
+              <li>Measuring how those parameters move acceptance rate, ETA, match rate and cancellations, to replace static city-level settings with adaptive, data-driven ones.</li>
             </ul>
-            <p class="tags"><span>Python</span><span>PySpark</span><span>SQL</span><span>XGBoost</span><span>FastAPI</span><span>Docker</span><span>AWS</span></p>
+            <p class="tags"><span>Marketplace analytics</span><span>Experimentation</span><span>Python</span></p>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary>
+              <span class="role">Senior Data Scientist</span>
+              <span class="org">Accertify, AI Team <small>(demerged from American Express)</small></span>
+              <span class="when">May 2024 – Jul 2026</span>
+            </summary>
+            <ul>
+              <li>Designed ML decisioning systems with gradient boosted trees and rule engines that <strong>auto-resolved ~60% of review queues</strong>, delivering <strong>$1M+</strong> in cost savings and fraud-dollar recovery.</li>
+              <li>Engineered a 100M+ record, 250+ feature PySpark dataset with external risk signals, monitored daily through Prometheus and Grafana.</li>
+              <li><strong>Fine-tuned LLaMA 3, Mistral 7B and Qwen</strong> with QLoRA for fraud classification, capturing sequential context between transactions; beat the legacy XGBoost baseline on highly imbalanced data.</li>
+              <li>Ran A/B tests and canary stress tests to tune decision thresholds across key client segments.</li>
+              <li>Mentored junior data scientists and standardised reproducibility and monitoring practices.</li>
+            </ul>
+            <p class="tags"><span>PySpark</span><span>XGBoost</span><span>QLoRA</span><span>Transformers</span><span>Grafana</span></p>
           </details>
         </li>
         <li>
           <details>
             <summary>
               <span class="role">Data Scientist</span>
-              <span class="org">American Express</span>
+              <span class="org">American Express, Global Decision Science</span>
               <span class="when">Aug 2022 – Apr 2024</span>
             </summary>
             <ul>
-              <li>Developed ML fraud-detection models for money transfer, retail, ticketing and travel.</li>
-              <li>Layered strategic rules on top of models to handle seasonal fraud patterns and industry quirks.</li>
-              <li>Named <strong>Analyst of the Quarter</strong> for the first-of-its-kind fraud model for the money-transfer industry.</li>
+              <li>Awarded <strong>Employee of the Quarter</strong> for a first-of-its-kind fraud detection framework for the Money Transfer vertical, cutting false negatives and chargeback exposure.</li>
+              <li>Built gradient boosted fraud models for Money Transfer, Retail and Travel, deployed as FastAPI microservices on AWS.</li>
+              <li>Developed a label-denoising method for over-marked training samples, reducing target noise by ~15%.</li>
+              <li>Automated daily model monitoring with Airflow.</li>
             </ul>
-            <p class="tags"><span>Python</span><span>Pandas</span><span>PySpark</span><span>SQL</span><span>Gradient boosting</span></p>
+            <p class="tags"><span>Python</span><span>Gradient boosting</span><span>FastAPI</span><span>AWS</span><span>Airflow</span></p>
           </details>
         </li>
       </ol>
 
       <h3 class="sub">Education</h3>
       <ul class="edu">
-        <li><span><strong>M.Tech, Computer Science</strong> · Indian Statistical Institute, Kolkata</span><span class="when">2020 – 22</span></li>
+        <li><span><strong>M.Tech, Computer Science</strong> · Indian Statistical Institute, Kolkata<br><small class="muted">Thesis: reconstruction and prediction approaches for anomaly detection in surveillance videos</small></span><span class="when">2020 – 22</span></li>
         <li><span><strong>B.Tech, Computer Science &amp; Engineering</strong> · G. B. Pant Engineering College, Pauri</span><span class="when">2015 – 19</span></li>
       </ul>
+
+      <h3 class="sub">Skills</h3>
+      <dl class="skills">
+        <dt>ML</dt><dd>Gradient boosted trees, classification, regression, clustering, anomaly detection, scikit-learn, PyTorch</dd>
+        <dt>GenAI</dt><dd>Transformers, PEFT (LoRA, QLoRA), SFT, RAG, vector DBs, LangChain, LangGraph, RAGAS</dd>
+        <dt>MLOps</dt><dd>PySpark, MLflow, Airflow, Docker, FastAPI, CI/CD, Prometheus, Grafana, AWS</dd>
+        <dt>Languages</dt><dd>Python, SQL, C, Bash</dd>
+      </dl>
     </section>
 
     <section id="projects" class="section">

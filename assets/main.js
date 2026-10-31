@@ -55,17 +55,6 @@
     sections.forEach(function (s) { s.classList.add('reveal'); reveal.observe(s); });
   }
 
-  // Project filters
-  var chips = $$('.chip');
-  var projects = $$('.projects li');
-  function filterProjects(cat) {
-    chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.filter === cat)); });
-    projects.forEach(function (p) { p.hidden = cat !== 'all' && p.dataset.cat !== cat; });
-  }
-  chips.forEach(function (chip) {
-    chip.addEventListener('click', function () { filterProjects(chip.dataset.filter); });
-  });
-
   // Copy email
   var copyBtn = $('#copy-email');
   var copyStatus = $('#copy-status');
@@ -141,18 +130,6 @@
         print('<span class="dim">type `open work` to jump to details</span>');
       }
     },
-    projects: {
-      desc: 'list projects [ml|llm|tools|algo]',
-      run: function (args) {
-        var cat = args[0];
-        var shown = projects.filter(function (p) { return !cat || p.dataset.cat === cat; });
-        if (!shown.length) { print('no projects tagged "' + escapeHtml(cat) + '". try: ml, llm, tools, algo'); return; }
-        shown.forEach(function (p) {
-          var a = $('a', p);
-          print('• ' + link(a.href, escapeHtml($('h3', p).textContent)));
-        });
-      }
-    },
     now: {
       desc: "what I'm up to",
       run: function () {
@@ -176,7 +153,7 @@
       run: function (args) {
         var id = args[0];
         if (id && document.getElementById(id)) goTo(id);
-        else print('usage: open about|work|projects|now|contact');
+        else print('usage: open about|work|now|contact');
       }
     },
     theme: {
@@ -195,7 +172,7 @@
       run: function () { term.close(); }
     }
   };
-  var aliases = { ls: 'projects', cv: 'resume', quit: 'exit', '?': 'help' };
+  var aliases = { ls: 'help', cv: 'resume', quit: 'exit', '?': 'help' };
 
   var quotes = [
     ['You have power over your mind — not outside events. Realize this, and you will find strength.', 'Marcus Aurelius'],
